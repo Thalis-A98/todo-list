@@ -23,7 +23,7 @@ export const Container = styled.div`
   text-align: center;
   font-size: 3rem;
   font-weight: 500;
-  @media (min-width: 768px) {
+  @media (min-height: 600px) {
     min-height: 900px;
   }
 `;

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import './App.css';
 import { Container, NewTask, Task } from './components/styles/style';
 
 function App() {

@@ -14,7 +14,7 @@ export const GlobalStayle = createGlobalStyle`
 
 export const Container = styled.div`
   width: 70%;
-  min-height: 600px;
+  min-height: 900px;
   background: rgba(0, 0, 0, 0.1);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
@@ -23,8 +23,8 @@ export const Container = styled.div`
   text-align: center;
   font-size: 3rem;
   font-weight: 500;
-  @media (min-height: 600px) {
-    min-height: 900px;
+  @media (max-height: 900px) {
+    min-height: 600px;
   }
 `;
 
@@ -36,6 +36,7 @@ export const NewTask = styled.div`
   width: 80%;
   height: auto;
   margin: 30px auto 30px auto;
+
   input {
     padding: 8px 24px;
     width: 300px;
@@ -67,6 +68,13 @@ export const NewTask = styled.div`
     }
     &:active {
       opacity: 0.6;
+    }
+  }
+  @media (max-width: 760px) {
+    flex-direction: column;
+    gap: 30px;
+    input {
+      width: 100%;
     }
   }
 `;
@@ -115,6 +123,14 @@ export const Task = styled.ul`
     }
     &:active {
       opacity: 0.6;
+    }
+  }
+  @media (max-width: 560px) {
+    li {
+      width: 100%;
+    }
+    p {
+      font-size: 1rem;
     }
   }
 `;

@@ -52,7 +52,7 @@ Error generating stack: `+o.message+`
   }
 `,Pm=po.div`
   width: 70%;
-  min-height: 600px;
+  min-height: 900px;
   background: rgba(0, 0, 0, 0.1);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
@@ -61,8 +61,8 @@ Error generating stack: `+o.message+`
   text-align: center;
   font-size: 3rem;
   font-weight: 500;
-  @media (min-height: 600px) {
-    min-height: 900px;
+  @media (max-height: 900px) {
+    min-height: 600px;
   }
 `,Nm=po.div`
   display: flex;
@@ -72,6 +72,7 @@ Error generating stack: `+o.message+`
   width: 80%;
   height: auto;
   margin: 30px auto 30px auto;
+
   input {
     padding: 8px 24px;
     width: 300px;
@@ -103,6 +104,13 @@ Error generating stack: `+o.message+`
     }
     &:active {
       opacity: 0.6;
+    }
+  }
+  @media (max-width: 760px) {
+    flex-direction: column;
+    gap: 30px;
+    input {
+      width: 100%;
     }
   }
 `,zm=po.ul`
@@ -149,6 +157,14 @@ Error generating stack: `+o.message+`
     }
     &:active {
       opacity: 0.6;
+    }
+  }
+  @media (max-width: 560px) {
+    li {
+      width: 100%;
+    }
+    p {
+      font-size: 1rem;
     }
   }
 `;function Tm(){const[e,t]=Gt.useState(""),[n,r]=Gt.useState([]),l=()=>{if(!e)return alert("Digite uma Tarefa!");const u={id:Math.floor(Math.random()*100),task:e,completed:!1};r([...n,u]),console.log(u),t("")},o=(u,s)=>{const a=[...n];a.map(h=>h.id===u?h.completed=!h.completed:h),r(a)},i=u=>{const s=n.filter(a=>a.id!==u);r(s)};return ce.jsxs(Pm,{children:["TODO List",ce.jsxs(Nm,{children:[ce.jsx("input",{value:e,type:"text",name:"newTask",id:"newTask",placeholder:"Digite aqui sua Tarefa",onChange:u=>t(u.target.value)}),ce.jsx("button",{type:"submit",onClick:l,children:"Adicionar"})]}),ce.jsx(zm,{children:n.map(u=>ce.jsxs("li",{style:{textDecoration:u.completed?"line-through":""},children:[ce.jsx("p",{children:u.task}),ce.jsxs("div",{children:[ce.jsx("button",{className:"btnCompleted",onClick:()=>o(u.id,u.completed),children:ce.jsx("i",{className:"bx bx-check "})}),ce.jsx("button",{onClick:()=>i(u.id),children:ce.jsx("i",{className:"bx bx-trash "})})]})]},u.id))})]})}Ko.createRoot(document.getElementById("root")).render(ce.jsxs(Ze.StrictMode,{children:[ce.jsx(Tm,{}),ce.jsx(_m,{})]}));

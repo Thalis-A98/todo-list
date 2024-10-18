@@ -1,20 +1,38 @@
-<!doctype html>
-<html lang="pt-BR">
-
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700&display=swap" rel="stylesheet">
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <title>Todo List</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List com Urgências</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/index.jsx"></script>
+    <div class="todo-container">
+        <h1>Lista de Tarefas</h1>
+        <form id="todo-form">
+            <input type="text" id="todo-input" placeholder="Adicione uma tarefa..." required>
+            <select id="urgency-level" required>
+                <option value="Baixa">Baixa</option>
+                <option value="Média">Média</option>
+                <option value="Alta">Alta</option>
+            </select>
+            <button type="submit">Adicionar</button>
+        </form>
+        <div class="columns-container">
+            <div class="column" id="low-priority">
+                <h3>Baixa</h3>
+                <ul id="todo-list-low"></ul>
+            </div>
+            <div class="column" id="medium-priority">
+                <h3>Média</h3>
+                <ul id="todo-list-medium"></ul>
+            </div>
+            <div class="column" id="high-priority">
+                <h3>Alta</h3>
+                <ul id="todo-list-high"></ul>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
 </body>
-
 </html>

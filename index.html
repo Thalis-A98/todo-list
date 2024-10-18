@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Botão de alternância de tema -->
+    <button id="theme-toggle-btn">Dark</button>
+
     <div class="todo-container">
         <h1>Lista de Tarefas</h1>
         <form id="todo-form">
@@ -18,17 +21,18 @@
             </select>
             <button type="submit">Adicionar</button>
         </form>
+
         <div class="columns-container">
             <div class="column" id="low-priority">
-                <h3>Baixa</h3>
+                <h2>Baixa</h2>
                 <ul id="todo-list-low"></ul>
             </div>
             <div class="column" id="medium-priority">
-                <h3>Média</h3>
+                <h2>Média</h2>
                 <ul id="todo-list-medium"></ul>
             </div>
             <div class="column" id="high-priority">
-                <h3>Alta</h3>
+                <h2>Alta</h2>
                 <ul id="todo-list-high"></ul>
             </div>
         </div>

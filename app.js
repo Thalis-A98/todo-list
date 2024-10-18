@@ -8,6 +8,33 @@ document.addEventListener('DOMContentLoaded', function () {
     const todoListMedium = document.getElementById('todo-list-medium');
     const todoListHigh = document.getElementById('todo-list-high');
 
+    // Botão de alternância de tema
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    
+    // Função para alternar entre temas
+    function toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        
+        // Atualizar texto do botão
+        if (document.body.classList.contains('dark-mode')) {
+            themeToggleBtn.textContent = 'Ligth';
+        } else {
+            themeToggleBtn.textContent = 'Dark';
+        }
+
+        // Salvar a preferência no localStorage
+        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+    }
+
+    // Carregar o tema salvo do localStorage
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeToggleBtn.textContent = 'Ligth';
+    }
+
+    themeToggleBtn.addEventListener('click', toggleTheme);
+
     // Adicionar tarefa
     todoForm.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -30,15 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
         deleteButton.textContent = 'Excluir';
         deleteButton.classList.add('delete-btn');
         deleteButton.addEventListener('click', function () {
-            li.classList.add('removing');
-            setTimeout(function () {
-                li.remove();
-            }, 400);  // Tempo da animação de remoção
-        });
-
-        // Toggle de completado
-        li.addEventListener('click', function () {
-            li.classList.toggle('completed');
+            li.remove();
         });
 
         li.appendChild(deleteButton);  // Adicionar o botão de excluir à tarefa

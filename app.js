@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', function () {
         
         // Atualizar texto do botão
         if (document.body.classList.contains('dark-mode')) {
-            themeToggleBtn.textContent = 'Ligth';
+            themeToggleBtn.textContent = 'Modo Claro';
         } else {
-            themeToggleBtn.textContent = 'Dark';
+            themeToggleBtn.textContent = 'Modo Escuro';
         }
 
         // Salvar a preferência no localStorage
@@ -30,10 +30,29 @@ document.addEventListener('DOMContentLoaded', function () {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
         document.body.classList.add('dark-mode');
-        themeToggleBtn.textContent = 'Ligth';
+        themeToggleBtn.textContent = 'Modo Claro';
     }
 
     themeToggleBtn.addEventListener('click', toggleTheme);
+
+    // Função para salvar tarefas no localStorage
+    function saveTasksToLocalStorage(tasks) {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    // Função para obter as tarefas do localStorage
+    function getTasksFromLocalStorage() {
+        const storedTasks = localStorage.getItem('tasks');
+        return storedTasks ? JSON.parse(storedTasks) : [];
+    }
+
+    // Função para carregar as tarefas salvas
+    function loadTasks() {
+        const tasks = getTasksFromLocalStorage();
+        tasks.forEach(task => {
+            addTask(task.text, task.urgency, false); // false para não salvar novamente ao carregar
+        });
+    }
 
     // Adicionar tarefa
     todoForm.addEventListener('submit', function (event) {
@@ -42,13 +61,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const urgency = urgencyLevel.value;
 
         if (taskText) {
-            addTask(taskText, urgency);
+            addTask(taskText, urgency, true);
             todoInput.value = '';  // Limpar o campo de entrada após adicionar
         }
     });
 
-    // Função para adicionar a tarefa à coluna correspondente
-    function addTask(taskText, urgency) {
+    // Função para adicionar a tarefa à coluna correspondente e opcionalmente salvar no localStorage
+    function addTask(taskText, urgency, save = true) {
         const li = document.createElement('li');
         li.textContent = taskText;
 
@@ -58,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
         deleteButton.classList.add('delete-btn');
         deleteButton.addEventListener('click', function () {
             li.remove();
+            removeTaskFromLocalStorage(taskText);
         });
 
         li.appendChild(deleteButton);  // Adicionar o botão de excluir à tarefa
@@ -70,5 +90,22 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (urgency === 'Alta') {
             todoListHigh.appendChild(li);
         }
+
+        // Salvar a tarefa no localStorage
+        if (save) {
+            const tasks = getTasksFromLocalStorage();
+            tasks.push({ text: taskText, urgency });
+            saveTasksToLocalStorage(tasks);
+        }
     }
+
+    // Função para remover uma tarefa do localStorage
+    function removeTaskFromLocalStorage(taskText) {
+        let tasks = getTasksFromLocalStorage();
+        tasks = tasks.filter(task => task.text !== taskText);
+        saveTasksToLocalStorage(tasks);
+    }
+
+    // Carregar tarefas ao iniciar a página
+    loadTasks();
 });

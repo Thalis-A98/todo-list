@@ -1,74 +1,89 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const todoForm = document.getElementById('todo-form');
-    const todoInput = document.getElementById('todo-input');
-    const urgencyLevel = document.getElementById('urgency-level');
-    
-    // Referências para as listas de cada urgência
-    const todoListLow = document.getElementById('todo-list-low');
-    const todoListMedium = document.getElementById('todo-list-medium');
-    const todoListHigh = document.getElementById('todo-list-high');
-
-    // Botão de alternância de tema
-    const themeToggleBtn = document.getElementById('theme-toggle-btn');
-    
-    // Função para alternar entre temas
-    function toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        
-        // Atualizar texto do botão
-        if (document.body.classList.contains('dark-mode')) {
-            themeToggleBtn.textContent = 'Ligth';
-        } else {
-            themeToggleBtn.textContent = 'Dark';
-        }
-
-        // Salvar a preferência no localStorage
-        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-    }
-
-    // Carregar o tema salvo do localStorage
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-        themeToggleBtn.textContent = 'Ligth';
-    }
-
-    themeToggleBtn.addEventListener('click', toggleTheme);
-
-    // Adicionar tarefa
-    todoForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const taskText = todoInput.value;
-        const urgency = urgencyLevel.value;
-
-        if (taskText) {
-            addTask(taskText, urgency);
-            todoInput.value = '';  // Limpar o campo de entrada após adicionar
-        }
+document.addEventListener("DOMContentLoaded", () => {
+    // Referências aos elementos do DOM
+    const form = document.getElementById("task-form");
+    const taskInput = document.getElementById("task-input");
+    const urgencySelect = document.getElementById("urgency-select");
+    const lowUrgencyList = document.getElementById("low-urgency-list");
+    const mediumUrgencyList = document.getElementById("medium-urgency-list");
+    const highUrgencyList = document.getElementById("high-urgency-list");
+  
+    // Função para adicionar uma nova tarefa
+    const addTask = (task, urgency) => {
+      const li = document.createElement("li");
+      li.textContent = task;
+  
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "Excluir";
+      deleteBtn.classList.add("delete-btn");
+  
+      // Adiciona o botão de deletar na tarefa
+      li.appendChild(deleteBtn);
+  
+      // Coloca a tarefa na coluna de urgência correta
+      if (urgency === "low") {
+        lowUrgencyList.appendChild(li);
+      } else if (urgency === "medium") {
+        mediumUrgencyList.appendChild(li);
+      } else if (urgency === "high") {
+        highUrgencyList.appendChild(li);
+      }
+  
+      // Função de excluir a tarefa
+      deleteBtn.addEventListener("click", () => {
+        li.remove();
+        saveTasks(); // Atualiza o armazenamento local após excluir uma tarefa
+      });
+    };
+  
+    // Função para salvar as tarefas no LocalStorage
+    const saveTasks = () => {
+      const tasks = {
+        low: [],
+        medium: [],
+        high: [],
+      };
+  
+      // Pega todas as tarefas de cada coluna
+      lowUrgencyList.querySelectorAll("li").forEach((task) => {
+        tasks.low.push(task.firstChild.textContent);
+      });
+      mediumUrgencyList.querySelectorAll("li").forEach((task) => {
+        tasks.medium.push(task.firstChild.textContent);
+      });
+      highUrgencyList.querySelectorAll("li").forEach((task) => {
+        tasks.high.push(task.firstChild.textContent);
+      });
+  
+      // Armazena as tarefas no LocalStorage
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    };
+  
+    // Função para carregar as tarefas do LocalStorage
+    const loadTasks = () => {
+      const savedTasks = JSON.parse(localStorage.getItem("tasks"));
+  
+      if (savedTasks) {
+        savedTasks.low.forEach((task) => addTask(task, "low"));
+        savedTasks.medium.forEach((task) => addTask(task, "medium"));
+        savedTasks.high.forEach((task) => addTask(task, "high"));
+      }
+    };
+  
+    // Evento de submissão do formulário para adicionar nova tarefa
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+  
+      const task = taskInput.value.trim();
+      const urgency = urgencySelect.value;
+  
+      if (task) {
+        addTask(task, urgency);
+        saveTasks(); // Salva as tarefas após adicionar uma nova
+        taskInput.value = ""; // Limpa o campo de texto
+      }
     });
-
-    // Função para adicionar a tarefa à coluna correspondente
-    function addTask(taskText, urgency) {
-        const li = document.createElement('li');
-        li.textContent = taskText;
-
-        // Botão de excluir
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Excluir';
-        deleteButton.classList.add('delete-btn');
-        deleteButton.addEventListener('click', function () {
-            li.remove();
-        });
-
-        li.appendChild(deleteButton);  // Adicionar o botão de excluir à tarefa
-
-        // Colocar a tarefa na coluna correta
-        if (urgency === 'Baixa') {
-            todoListLow.appendChild(li);
-        } else if (urgency === 'Média') {
-            todoListMedium.appendChild(li);
-        } else if (urgency === 'Alta') {
-            todoListHigh.appendChild(li);
-        }
-    }
-});
+  
+    // Carrega as tarefas ao carregar a página
+    loadTasks();
+  });
+  

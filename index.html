@@ -1,42 +1,38 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo List com Urgências</title>
     <link rel="stylesheet" href="styles.css">
+    <title>Todo List</title>
 </head>
 <body>
-    <!-- Botão de alternância de tema -->
-    <button id="theme-toggle-btn">Dark</button>
+    <h1>Lista de Tarefas</h1>
+    <form id="task-form">
+        <input type="text" id="task-input" placeholder="Adicionar nova tarefa" required>
+        <select id="urgency-select">
+            <option value="low">Baixa</option>
+            <option value="medium">Média</option>
+            <option value="high">Alta</option>
+        </select>
+        <button type="submit">Adicionar Tarefa</button>
+    </form>
 
-    <div class="todo-container">
-        <h1>Lista de Tarefas</h1>
-        <form id="todo-form">
-            <input type="text" id="todo-input" placeholder="Adicione uma tarefa..." required>
-            <select id="urgency-level" required>
-                <option value="Baixa">Baixa</option>
-                <option value="Média">Média</option>
-                <option value="Alta">Alta</option>
-            </select>
-            <button type="submit">Adicionar</button>
-        </form>
-
-        <div class="columns-container">
-            <div class="column" id="low-priority">
-                <h2>Baixa</h2>
-                <ul id="todo-list-low"></ul>
-            </div>
-            <div class="column" id="medium-priority">
-                <h2>Média</h2>
-                <ul id="todo-list-medium"></ul>
-            </div>
-            <div class="column" id="high-priority">
-                <h2>Alta</h2>
-                <ul id="todo-list-high"></ul>
-            </div>
+    <div class="columns-container">
+        <div class="column">
+            <h2>Baixa</h2>
+            <ul id="low-urgency-list"></ul>
+        </div>
+        <div class="column">
+            <h2>Média</h2>
+            <ul id="medium-urgency-list"></ul>
+        </div>
+        <div class="column">
+            <h2>Alta</h2>
+            <ul id="high-urgency-list"></ul>
         </div>
     </div>
+
     <script src="app.js"></script>
 </body>
 </html>

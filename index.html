@@ -1,38 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Todo List</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List com Urgência</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Lista de Tarefas</h1>
-    <form id="task-form">
-        <input type="text" id="task-input" placeholder="Adicionar nova tarefa" required>
-        <select id="urgency-select">
-            <option value="low">Baixa</option>
-            <option value="medium">Média</option>
-            <option value="high">Alta</option>
-        </select>
-        <button type="submit">Adicionar Tarefa</button>
-    </form>
-
-    <div class="columns-container">
-        <div class="column">
-            <h2>Baixa</h2>
-            <ul id="low-urgency-list"></ul>
-        </div>
-        <div class="column">
-            <h2>Média</h2>
-            <ul id="medium-urgency-list"></ul>
-        </div>
-        <div class="column">
-            <h2>Alta</h2>
-            <ul id="high-urgency-list"></ul>
-        </div>
+  <h1>Lista de Tarefas</h1>
+  <form>
+    <input type="text" id="taskInput" placeholder="Adicione uma nova tarefa">
+    <select id="urgencySelect">
+      <option value="low">Baixa</option>
+      <option value="medium">Média</option>
+      <option value="high">Alta</option>
+    </select>
+    <button type="button" id="addTaskButton">Adicionar Tarefa</button>
+  </form>
+  <div class="columns-container">
+    <div class="column">
+      <h2>Baixa</h2>
+      <ul id="lowUrgencyTasks"></ul>
     </div>
-
-    <script src="app.js"></script>
+    <div class="column">
+      <h2>Média</h2>
+      <ul id="mediumUrgencyTasks"></ul>
+    </div>
+    <div class="column">
+      <h2>Alta</h2>
+      <ul id="highUrgencyTasks"></ul>
+    </div>
+  </div>
+  <script src="app.js"></script>
 </body>
 </html>
